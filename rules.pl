@@ -26,7 +26,7 @@ all_superstates(Set) :- findall(Supersate, superstate(Supersate, _), List), list
 ancestor(Ancestor, Descendant) :- transition(Ancestor, Descendant, _, _, _).
 
 %8
-inheriss_transitions(State, List) :- inherits_transitions_helper(State, List, []).
+inheritss_transitions(State, List) :- inherits_transitions_helper(State, List, []).
 inherits_transitions_helper(State, List, Collection) :- superstate(Superstate, State), not(superstate(_, Superstate)), findall([Event, Guard], transition(Superstate, _, Event, Guard, _), Elements), append(Collection, Elements, List).
 inherits_transitions_helper(State, List, Collection) :- superstate(Supersate, State), findall([Event, Guard], transition(Supersate, _, Event, Guard, _), Elements), append(Collection, Elements, NewList), inherits_transitions_helper(Supersate, List, NewList).
 
