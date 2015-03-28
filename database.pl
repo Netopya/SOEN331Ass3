@@ -72,13 +72,13 @@ transition(psichk,ready,psi_ok,null,null).
 
 /* Transitions in the monitoring state */
 transition(monidle,regulate_environment,no_contagion,null,null).
-transition(monidle,lockdown,contagion_alert,null,FACILITY_CRIT_MSG;'inlockdown := true').
+transition(monidle,lockdown,contagion_alert,null,'FACILITY_CRIT_MSG;inlockdown := true').
 transition(lockdown,monidle,purge_succ,null,'inlockdown := false').
 transition(regulate_environment,monidle,after_100ms,null,null).
 
 /* Transitions in the lockdown state */
-transition(prep_vpurge,alt_temp;alt_psi,initiate_purge,null,lock_doors).
-transition(alt_temp;alt_psi,risk_assess,tcyc_comp;psicyc_comp,null,null).
+transition(prep_vpurge,'alt_temp;alt_psi',initiate_purge,null,lock_doors).
+transition('alt_temp;alt_psi',risk_assess,tcyc_comp;psicyc_comp,null,null).
 transition(risk_assess,prep_vpurge,null,'risk > 0.01',null).
 transition(risk_assess,safe_status,null,'risk <= 0.01',unlock_doors).
 
@@ -87,3 +87,11 @@ transition(error_rcv,applicable_rescue,null,'err_protocol_def = true',null).
 transition(error_rcv,reset_module_data,null,'err_protocol_def = false',null).
 transition(applicable_rescue,exit,apply_protocol_rescues,null,null).
 transition(reset_module_data,exit,reset_to_stable,null,null).
+
+/* Exit transitions */
+transition(dorman,exit,kill,'inlockdown = false',null).
+transition(init,exit,kill,'inlockdown = false',null).
+transition(idle,exit,kill,'inlockdown = false',null).
+transition(monitoring,exit,kill,'inlockdown = false',null).
+transition(error_diagnosis,exit,kill,'inlockdown = false',null).
+transition(safe_shutdown,exit,kill,'inlockdown = false',null).
