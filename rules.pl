@@ -39,15 +39,20 @@ all_init_states(L) :- findall(State, initial_state(State, _), L).
 path(State1,State2) :- transition(State1,State2,_,_,_).
 path(State1,State2) :- transition(State1,X,_,_,_),path(X,State2).
 
+%11
 get_starting_state(State) :- initial_state(State,null).
 
+%12
 state_is_reflexive(State) :- path(State,State).
 
-get_guards(Ret) :- transition(_,_,_,Ret,_), Ret \= null.
+%13
+get_guards(Ret) :- findall(X,(transition(_,_,_,X,_),X \= null),Lst),list_to_set(Lst,Ret).
 
-get_events(Ret) :- transition(_,_,Ret,_,_), Ret \= null.
+%14
+get_events(Ret) :- findall(X,(transition(_,_,X,_,_),X \= null),Lst),list_to_set(Lst,Ret).
 
-get_actions(Ret) :- transition(_,_,_,_,Ret), Ret \= null.
+%15
+get_actions(Ret) :- findall(X,(transition(_,_,_,_,X),X \= null),Lst),list_to_set(Lst,Ret).
 
 /*
 get_only_guarded(Ret) :-
