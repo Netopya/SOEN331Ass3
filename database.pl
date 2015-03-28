@@ -78,7 +78,7 @@ transition(regulate_environment,monidle,after_100ms,null,null).
 
 /* Transitions in the lockdown state */
 transition(prep_vpurge,'alt_temp;alt_psi',initiate_purge,null,lock_doors).
-transition('alt_temp;alt_psi',risk_assess,tcyc_comp;psicyc_comp,null,null).
+transition('alt_temp;alt_psi',risk_assess,'tcyc_comp;psicyc_comp',null,null).
 transition(risk_assess,prep_vpurge,null,'risk > 0.01',null).
 transition(risk_assess,safe_status,null,'risk <= 0.01',unlock_doors).
 
